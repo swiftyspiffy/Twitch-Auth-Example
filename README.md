@@ -30,9 +30,12 @@ This example calls the Twitch api with the recently generated access token to di
 
 ## Packages Used
 - [TwitchLib.Api](https://github.com/MiffOttah/CNHttp): C# Twitch api library that wraps all Twitch helix, v5, auth and undocumented endpoints, as well as some helper third party stuff.
-- [CNHttp](https://github.com/TwitchLib/TwitchLib.Api): .NET Core ported NHttp web server library.
+- [CNHttp](https://github.com/MiffOttah/CNHttp): .NET Core ported NHttp web server library.
 
 **You might need to select the "Include prerelease" checkbox in the NuGet package browser to see/get the right versions.**
 
 ## Contributors
  * Cole ([@swiftyspiffy](http://twitter.com/swiftyspiffy))
+
+## Questions?
+Ping me on Twitter: https://twitter.com/swiftyspiffy
