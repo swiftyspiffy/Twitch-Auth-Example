@@ -51,23 +51,4 @@ namespace TwitchAuthExample
             return null;
         }
     }
-
-    /*
-        private void Server_RequestReceived(object sender, HttpRequestEventArgs e)
-        {
-            using(var writer = new StreamWriter(e.Response.OutputStream))
-            {
-                if(e.Request.QueryString.AllKeys.Any("code".Contains))
-                {
-                    OnAuthorization?.Invoke(sender, new OnAuthorizationArgs(e.Request.QueryString["code"]));
-                    writer.WriteLine("Authorization started! Check your application!");
-                } else
-                {
-                    writer.WriteLine("No code found in query string!");
-                }
-                writer.Flush();
-            }
-        }
-    }
-    */
 }
