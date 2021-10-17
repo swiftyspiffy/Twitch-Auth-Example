@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TwitchAuthExample.Events
+namespace TwitchAuthExample.Models
 {
-    public class OnAuthorizationArgs
+    public class Authorization
     {
         public string Code { get; }
         
-        public OnAuthorizationArgs(string code)
+        public Authorization(string code)
         {
             Code = code;
         }

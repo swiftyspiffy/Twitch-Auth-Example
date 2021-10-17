@@ -26,19 +26,27 @@ namespace TwitchAuthExample
             api.Settings.ClientId = Config.TwitchClientId;
 
             // start local web server
-            var server = new WebServer();
-            server.OnAuthorization += async (s, e) =>
-            {
-                var resp = await api.Auth.GetAccessTokenFromCodeAsync(e.Code, Config.TwitchClientSecret, Config.TwitchRedirectUri);
-                api.Settings.AccessToken = resp.AccessToken; // the users api call requires the access token be set
-                var user = (await api.Helix.Users.GetUsersAsync()).Users[0];
-                Console.WriteLine($"Authorization success!\n\nUser: {user.DisplayName} (id: {user.Id})\nAccess token: {resp.AccessToken}\nRefresh token: {resp.RefreshToken}\nExpires in: {resp.ExpiresIn}\nScopes: {string.Join(", ", resp.Scopes)}");
-            };
-            server.Start();
+            var server = new WebServer(Config.TwitchRedirectUri);
 
             // print out auth url
             Console.WriteLine($"Please authorize here:\n{getAuthorizationCodeUrl(Config.TwitchClientId, Config.TwitchRedirectUri, scopes)}");
 
+            // listen for incoming requests
+            var auth = await server.Listen();
+
+            // exchange auth code for oauth access/refresh
+            var resp = await api.Auth.GetAccessTokenFromCodeAsync(auth.Code, Config.TwitchClientSecret, Config.TwitchRedirectUri);
+
+            // update TwitchLib's api with the recently acquired access token
+            api.Settings.AccessToken = resp.AccessToken;
+
+            // get the auth'd user
+            var user = (await api.Helix.Users.GetUsersAsync()).Users[0];
+
+            // print out all the data we've got
+            Console.WriteLine($"Authorization success!\n\nUser: {user.DisplayName} (id: {user.Id})\nAccess token: {resp.AccessToken}\nRefresh token: {resp.RefreshToken}\nExpires in: {resp.ExpiresIn}\nScopes: {string.Join(", ", resp.Scopes)}");
+
+            // prevent console from closing
             Console.ReadLine();
         }
 

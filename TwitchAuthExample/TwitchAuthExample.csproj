@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CNHttp" Version="0.2.0-beta1" />
     <PackageReference Include="TwitchLib.Api" Version="3.3.0" />
   </ItemGroup>
 
