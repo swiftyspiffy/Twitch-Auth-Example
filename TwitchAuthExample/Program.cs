@@ -46,6 +46,16 @@ namespace TwitchAuthExample
             // print out all the data we've got
             Console.WriteLine($"Authorization success!\n\nUser: {user.DisplayName} (id: {user.Id})\nAccess token: {resp.AccessToken}\nRefresh token: {resp.RefreshToken}\nExpires in: {resp.ExpiresIn}\nScopes: {string.Join(", ", resp.Scopes)}");
 
+            // refresh token
+            var refresh = await api.Auth.RefreshAuthTokenAsync(resp.AccessToken, Config.TwitchClientSecret);
+            api.Settings.AccessToken = refresh.AccessToken;
+
+            // confirm new token works
+            user = (await api.Helix.Users.GetUsersAsync()).Users[0];
+
+            // print out all the data we've got
+            Console.WriteLine($"Authorization success!\n\nUser: {user.DisplayName} (id: {user.Id})\nAccess token: {resp.AccessToken}\nRefresh token: {resp.RefreshToken}\nExpires in: {resp.ExpiresIn}\nScopes: {string.Join(", ", resp.Scopes)}");
+
             // prevent console from closing
             Console.ReadLine();
         }
